@@ -1,161 +1,238 @@
+package com.mycompany.analyseurlexicalc;
 
-package com.mycompany.syntaxc;
+import java.util.List;
 
-public class AnalyseurSyntaxique {
+public class AnalyseurSyntaxiqueC {
 
-    public static int i;       // index dans le tableau
-    public static boolean r;   // indique si chaîne correcte
-    public static String[] t;  // tableau de mots
+    private List<Token> tokens;
+    private int i;
+    private boolean erreur = false;
 
-    // ==============================
-    // Z → S #
-    // ==============================
-    public static void Z(String ch) {
-        t = ch.split("\\s+");
-        i = 0;
-        r = true;
+    public AnalyseurSyntaxiqueC(List<Token> tokens) {
+        this.tokens = tokens;
+        this.i = 0;
+        tokens.add(new Token("Fin", "#")); // token de fin
+    }
 
-        S();
+    // ======================
+    // Analyse du programme
+    // ======================
+    public void analyserProgramme() {
+        if (look("MotCle", "int") && lookAhead(1, "Fonction", "main")) {
+            i++; // int
+            i++; // main
+            expect("ParentheseOuvrante");
+            expect("ParentheseFermante");
+            expect("AccoladeOuvrante");
 
-        if (i == t.length - 1 && t[i].equals("#") && r == true) {
-            System.out.println("✔ La chaîne est acceptée");
+            while (!look("AccoladeFermante") && !lookVal("#")) {
+                S();
+                if (erreur) break;
+            }
+
+            expect("AccoladeFermante");
         } else {
-            System.out.println("✘ La chaîne n'est pas acceptée");
+            erreur = true;
+        }
+
+        if (erreur) {
+            System.out.println("❌ La chaîne n'est PAS acceptée.");
+        } else {
+            System.out.println("✔ La chaîne est ACCEPTÉE !");
         }
     }
 
-    // ==============================
-    // S → DO BLOC WHILE ( COND ) ;
-    // ==============================
-    public static void S() {
+    // ======================
+    // Instruction principale
+    // ======================
+    private void S() {
+        if (erreur) return;
 
-        if (!mot("do")) erreur("do attendu");
-
-        BLOC();
-
-        if (!mot("while")) erreur("while attendu");
-
-        if (!mot("(")) erreur("'(' attendu");
-
-        COND();
-
-        if (!mot(")")) erreur("')' attendu");
-
-        if (!mot(";")) erreur("';' attendu");
-    }
-
-    // ==============================
-    // BLOC → { INSTRUCTIONS }
-    // ==============================
-    public static void BLOC() {
-
-        if (!mot("{")) erreur("'{' attendu");
-
-        INSTRUCTIONS();
-
-        if (!mot("}")) erreur("'}' attendu");
-    }
-
-    // ==============================
-    // INSTRUCTIONS → instruction INSTRUCTIONS | ε
-    // ==============================
-    public static void INSTRUCTIONS() {
-
-        if (t[i].equals("}")) return; // epsilon
-
-        instruction();
-        INSTRUCTIONS();
-    }
-
-    // ==============================
-    // instruction →
-    //    ident = nombre ;
-    //    ident ++ ;
-    //    ident -- ;
-    //    autre ignoré
-    // ==============================
-    public static void instruction() {
-
-        String mot = t[i];
-
-        // ident ?
-        if (estIdent(mot)) {
-
-            i++; // consommer ident
-
-            // ident = nombre ;
-            if (mot("=")) {
-
-                if (!estNombre(t[i])) erreur("nombre attendu après '='");
-                else i++;
-
-                if (!mot(";")) erreur("';' attendu après affectation");
-
-                return;
-            }
-
-            // ident ++ ;
-            if (mot("++")) {
-                if (!mot(";")) erreur("';' attendu après ++");
-                return;
-            }
-
-            // ident -- ;
-            if (mot("--")) {
-                if (!mot(";")) erreur("';' attendu après --");
-                return;
-            }
-
-            // sinon : instruction ignorée
+        if (look("MotCle", "do")) {
+            i++;
+            ST();
+            expect("MotCle", "while");
+            expect("ParentheseOuvrante");
+            E();
+            expect("ParentheseFermante");
+            expect("PointVirgule");
             return;
         }
 
-        // sinon mot ignoré
-        i++;
-    }
-
-    // ==============================
-    // COND → ident OP nombre
-    // ==============================
-    public static void COND() {
-
-        if (!estIdent(t[i])) erreur("identifiant attendu dans condition");
-        else i++;
-
-        if (!estOperateur(t[i])) erreur("opérateur attendu dans condition");
-        else i++;
-
-        if (!estNombre(t[i])) erreur("nombre attendu dans condition");
-        else i++;
-    }
-
-    // ==============================
-    // FONCTIONS UTILITAIRES
-    // ==============================
-    public static boolean mot(String m) {
-        if (t[i].equals(m)) {
-            i++;
-            return true;
+        if (look("MotCle", "int") || look("MotCle", "float") || look("MotCle", "char")) {
+            Declaration();
+            return;
         }
+
+        if (look("MotCle", "return")) {
+            ReturnStatement();
+            return;
+        }
+
+        simpleStatement();
+    }
+
+    // ======================
+    // Bloc d'instructions
+    // ======================
+    private void ST() {
+        if (erreur) return;
+
+        if (look("AccoladeOuvrante")) {
+            i++;
+            while (!look("AccoladeFermante") && !lookVal("#")) {
+                S();
+                if (erreur) return;
+            }
+            expect("AccoladeFermante");
+        } else {
+            simpleStatement();
+        }
+    }
+
+    // ======================
+    // Déclaration
+    // ======================
+    private void Declaration() {
+        if (erreur) return;
+
+        i++; // type
+        expect("Identifiant");
+
+        if (accept("Egal")) {
+            E();
+        }
+
+        expect("PointVirgule");
+    }
+
+    // ======================
+    // Instruction simple
+    // ======================
+    private void simpleStatement() {
+        if (erreur) return;
+
+        if (look("Identifiant")) {
+            i++;
+            if (accept("Operateur") || accept("Increment") || accept("Decrement")) {
+                expect("PointVirgule");
+                return;
+            }
+
+            expect("Egal");
+            E();
+            expect("PointVirgule");
+            return;
+        }
+
+        if (look("Fonction")) {
+            i++;
+            expect("ParentheseOuvrante");
+            // accepter des expressions ou des strings
+            while (!look("ParentheseFermante") && !lookVal("#")) {
+                if (look("String") || look("Identifiant") || look("Nombre")) {
+                    i++;
+                } else if (isOperateur()) {
+                    i++;
+                } else {
+                    erreur = true;
+                    return;
+                }
+            }
+            expect("ParentheseFermante");
+            expect("PointVirgule");
+            return;
+        }
+
+        if (look("String")) {
+            i++;
+            return;
+        }
+
+        erreur = true;
+    }
+
+    // ======================
+    // Return statement
+    // ======================
+    private void ReturnStatement() {
+        expect("MotCle", "return");
+        E();
+        expect("PointVirgule");
+    }
+
+    // ======================
+    // Expression
+    // ======================
+    private void E() {
+        if (erreur) return;
+
+        if (look("Identifiant") || look("Nombre") || look("String")) {
+            i++;
+        } else {
+            erreur = true;
+            return;
+        }
+
+        while (isOperateur()) {
+            i++;
+            if (look("Identifiant") || look("Nombre") || look("String")) {
+                i++;
+            } else {
+                erreur = true;
+                return;
+            }
+        }
+    }
+
+    private boolean isOperateur() {
+        return look("Addition") || look("Soustraction") || look("Multiplication") || look("Division") ||
+               look("Inferieur") || look("Superieur") || look("Egal") || look("Operateur");
+    }
+
+   
+    private boolean look(String type) {
+        return i < tokens.size() && tokens.get(i).type.equals(type);
+    }
+
+    private boolean look(String type, String val) {
+        return look(type) && tokens.get(i).valeur.equals(val);
+    }
+
+    private boolean lookVal(String val) {
+        return i < tokens.size() && tokens.get(i).valeur.equals(val);
+    }
+
+    private boolean accept(String type) {
+        if (look(type)) { i++; return true; }
         return false;
     }
 
-    public static void erreur(String msg) {
-        System.out.println("Erreur : " + msg + " (lu = '" + t[i] + "')");
-        r = false;
-        i++; // avancer pour éviter boucle infinie
+    private boolean accept(String type, String val) {
+        if (look(type, val)) { i++; return true; }
+        return false;
     }
 
-    public static boolean estIdent(String s) {
-        return s.matches("[a-zA-Z_][a-zA-Z0-9_]*");
+    private void expect(String type) {
+        if (!look(type)) {
+            erreur = true;
+            return;
+        }
+        i++;
     }
 
-    public static boolean estNombre(String s) {
-        return s.matches("[0-9]+");
+    private void expect(String type, String val) {
+        if (!look(type, val)) {
+            erreur = true;
+            return;
+        }
+        i++;
     }
 
-    public static boolean estOperateur(String s) {
-        return s.equals("<") || s.equals(">") || s.equals("==") ||
-               s.equals("!=") || s.equals("<=") || s.equals(">=");
+    private boolean lookAhead(int offset, String type, String val) {
+        return (i + offset < tokens.size() &&
+                tokens.get(i + offset).type.equals(type) &&
+                tokens.get(i + offset).valeur.equals(val));
     }
 }
+
