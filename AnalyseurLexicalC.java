@@ -55,13 +55,27 @@ public class AnalyseurLexicalC {
                     continue;
                 }
 
+                // Gérer les chaînes entre guillemets
+                if (c == '"') {
+                    StringBuilder str = new StringBuilder();
+                    i++; // consommer le guillemet ouvrant
+                    while (i < ligne.length() && ligne.charAt(i) != '"') {
+                        str.append(ligne.charAt(i));
+                        i++;
+                    }
+                    if (i < ligne.length() && ligne.charAt(i) == '"') i++; 
+                    tokens.add(new Token("String", str.toString()));
+                    continue;
+                }
+
                 // IDENTIFIANTS / MOTS-CLÉS / FONCTIONS
                 if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_') {
                     String mot = "" + c;
                     i++;
                     while (i < ligne.length()) {
                         char cur = ligne.charAt(i);
-                        if ((cur >= 'a' && cur <= 'z') || (cur >= 'A' && cur <= 'Z') || (cur >= '0' && cur <= '9') || cur == '_') {
+                        if ((cur >= 'a' && cur <= 'z') || (cur >= 'A' && cur <= 'Z') || 
+                            (cur >= '0' && cur <= '9') || cur == '_') {
                             mot += cur;
                             i++;
                         } else break;
@@ -148,6 +162,7 @@ public class AnalyseurLexicalC {
         return tokens;
     }
 }
+
 
 
 
