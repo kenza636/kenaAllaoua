@@ -2,137 +2,129 @@ package com.mycompany.analyseurlexicalc;
 
 import java.util.List;
 
-
-
 public class AnalyseurSyntaxiqueC {
 
-    private List<Token> tokens;  // tokens générés par l'analyseur lexical
-    private int i;               // index courant
-    private boolean r;           // état de validation
+    private List<Token> tokens;
+    private int i;
 
     public AnalyseurSyntaxiqueC(List<Token> tokens) {
         this.tokens = tokens;
         this.i = 0;
-        this.r = true;
-
-        // Ajouter un token spécial # à la fin pour simplifier la vérification
-        tokens.add(new Token("Fin", "#"));
+        tokens.add(new Token("Fin", "#")); // Token de fin
     }
 
     public void analyserProgramme() {
-        S(); // commencer l'analyse
-        if (r && tokens.get(i).valeur.equals("#")) {
-            System.out.println("La chaîne est acceptée !");
-        } else {
-            System.out.println("Erreur de syntaxe !");
+        while (i < tokens.size() && !lookVal("#")) {
+            S();
         }
+        System.out.println("La chaîne est acceptée !");
     }
 
-    // Instruction : do-while ou simple statement
+    // Instruction principale
     private void S() {
-        if (!r) return;
-
-        // do-while
-        if (tokens.get(i).type.equals("MotCle") && tokens.get(i).valeur.equals("do")) {
-            i++; // consommer 'do'
-            ST(); // bloc ou instruction simple
-            if (tokens.get(i).type.equals("MotCle") && tokens.get(i).valeur.equals("while")) {
-                i++; // consommer 'while'
-                if (tokens.get(i).type.equals("ParentheseOuvrante")) {
-                    i++; // consommer '('
-                    E(); // expression
-                    if (tokens.get(i).type.equals("ParentheseFermante")) {
-                        i++; // consommer ')'
-                        if (tokens.get(i).type.equals("PointVirgule")) {
-                            i++; // consommer ';'
-                        } else {
-                            erreur("Point-virgule manquant après while");
-                        }
-                    } else {
-                        erreur("Parenthèse fermante manquante");
-                    }
-                } else {
-                    erreur("Parenthèse ouvrante manquante après while");
-                }
-            } else {
-                erreur("Mot-clé 'while' attendu");
-            }
-        } else {
-            simpleStatement();
-        }
-    }
-
-    // Bloc ou instruction simple
-    private void ST() {
-        if (!r) return;
-
-        if (tokens.get(i).type.equals("AccoladeOuvrante")) {
-            i++; // consommer '{'
-            while (!tokens.get(i).type.equals("AccoladeFermante") && r) {
-                S();
-            }
-            if (tokens.get(i).type.equals("AccoladeFermante")) {
-                i++; // consommer '}'
-            } else {
-                erreur("Accolade fermante manquante");
-            }
-        } else {
-            simpleStatement();
-        }
-    }
-
-    // Instruction simple id = expression ;
-    private void simpleStatement() {
-        if (!r) return;
-
-        if (tokens.get(i).type.equals("Identifiant")) {
-            i++; // consommer identifiant
-            if (tokens.get(i).type.equals("Egal")) {
-                i++; // consommer '='
-                E(); // expression
-                if (tokens.get(i).type.equals("PointVirgule")) {
-                    i++; // consommer ';'
-                } else {
-                    r = false;
-                    erreur("Point-virgule manquant");
-                }
-            } else {
-                r = false;
-                erreur("'=' attendu");
-            }
-        } else {
-            r = false;
-            erreur("Instruction simple attendue");
-        }
-    }
-
-    // Expression simple : id, nombre ou combinaison avec opérateur
-    private void E() {
-        if (!r) return;
-
-        if (tokens.get(i).type.equals("Identifiant") || tokens.get(i).type.equals("Nombre")) {
-            i++; // consommer id ou nombre
-        } else {
-            erreur("Expression invalide");
+        if (look("MotCle", "do")) {
+            i++;
+            ST();
+            accept("MotCle", "while");
+            accept("ParentheseOuvrante");
+            E();
+            accept("ParentheseFermante");
+            accept("PointVirgule");
             return;
         }
-
-        // Vérifier si opérateur suit
-        if (tokens.get(i).type.equals("Addition") ||
-            tokens.get(i).type.equals("Soustraction") ||
-            tokens.get(i).type.equals("Multiplication") ||
-            tokens.get(i).type.equals("Division") ||
-            tokens.get(i).type.equals("Inferieur") ||
-            tokens.get(i).type.equals("Superieur") ||
-            tokens.get(i).type.equals("Egal") ||
-            tokens.get(i).type.equals("Negation")) {
-            i++; // consommer opérateur
-            E(); // partie droite
+        if (look("MotCle", "int") || look("MotCle", "float") || look("MotCle", "char")) {
+            Declaration();
+        } else if (look("MotCle", "return")) {
+            ReturnStatement();
+        } else {
+            simpleStatement();
         }
     }
 
-    private void erreur(String msg) {
-        r = false;
-        System.out.println("Erreur : " + msg);
+    private void ST() {
+        if (look("AccoladeOuvrante")) {
+            i++;
+            while (!look("AccoladeFermante") && !lookVal("#") && i < tokens.size()) {
+                S();
+            }
+            accept("AccoladeFermante");
+        } else {
+            simpleStatement();
+        }
+    }
+
+    private void Declaration() {
+        i++; // Type
+        accept("Identifiant");
+        accept("Egal");
+        E();
+        accept("PointVirgule");
+    }
+
+    private void simpleStatement() {
+        if (look("Identifiant")) {
+            accept("Identifiant");
+            accept("Increment"); // i++
+            accept("Decrement"); // i--
+            accept("Egal");
+            E();
+            accept("PointVirgule");
+        } else if (look("AppelFonction")) { // printf(...)
+            accept("AppelFonction");
+            accept("ParentheseOuvrante");
+            E();
+            accept("ParentheseFermante");
+            accept("PointVirgule");
+        } else {
+            i++; // Ignorer token inconnu
+        }
+    }
+
+    private void ReturnStatement() {
+        accept("MotCle", "return");
+        E();
+        accept("PointVirgule");
+    }
+
+    private void E() {
+        if (i >= tokens.size()) return;
+
+        if (look("Identifiant") || look("Nombre") || look("String")) {
+            i++;
+        }
+
+        if (isOperateur()) {
+            i++;
+            E();
+        }
+    }
+
+    private boolean isOperateur() {
+        return look("Addition") || look("Soustraction") ||
+               look("Multiplication") || look("Division") ||
+               look("Inferieur") || look("Superieur") || look("Egal");
+    }
+
+    private boolean look(String type) {
+        return i < tokens.size() && tokens.get(i).type.equals(type);
+    }
+
+    private boolean look(String type, String val) {
+        return look(type) && tokens.get(i).valeur.equals(val);
+    }
+
+    private boolean lookVal(String val) {
+        return i < tokens.size() && tokens.get(i).valeur.equals(val);
+    }
+
+    private boolean accept(String type) {
+        if (look(type)) { i++; return true; }
+        return false;
+    }
+
+    private boolean accept(String type, String val) {
+        if (look(type, val)) { i++; return true; }
+        return false;
     }
 }
+
