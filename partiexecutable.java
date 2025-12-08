@@ -11,7 +11,7 @@ public class partiexecutable {
         int choix;
         int choixAnalyse;
 
-        // Programmes C sous forme de chaînes
+        // Programme 1
         String[] programme1 = {
             "// Exemple de boucle do/while avec if/else",
             "#include <stdio.h>",
@@ -32,6 +32,7 @@ public class partiexecutable {
             "}"
         };
 
+        // Programme 2
         String[] programme2 = {
             "#include <stdio.h>",
             "int main() {",
@@ -52,6 +53,7 @@ public class partiexecutable {
             "}"
         };
 
+        // Programme 3
         String[] programme3 = {
             "#include <stdio.h>",
             "int main() {",
@@ -69,15 +71,32 @@ public class partiexecutable {
             "}"
         };
 
+        // Programme 4
+      String[] programme4 = {
+    "int main() {",
+    "    int x = 5;",
+    "    float y = 12;",  
+    "    int i = 0;", 
+    "    do {",
+    "        printf(\"md\");",
+    "        i++;",
+    "    } while (i == 5);",
+    "    return 0;",
+    "}"
+};
+
+
         String[] programme = null;
 
         while (true) {
+            // Menu principal
             System.out.println("\n===== Analyseur Lexical C =====");
             System.out.println("1. Programme do/while");
             System.out.println("2. Programme do/while factorielle");
             System.out.println("3. Programme do/while compteur");
-            System.out.println("4. Saisir votre programme");
-            System.out.println("5. Quitter");
+            System.out.println("4. Nouveau programme simple");
+            System.out.println("5. Saisir votre programme");
+            System.out.println("6. Quitter");
             System.out.print("Choisissez un programme : ");
             choix = sc.nextInt();
             sc.nextLine(); // consommer le saut de ligne
@@ -86,7 +105,8 @@ public class partiexecutable {
                 case 1 -> programme = programme1;
                 case 2 -> programme = programme2;
                 case 3 -> programme = programme3;
-                case 4 -> {
+                case 4 -> programme = programme4;
+                case 5 -> {
                     System.out.println("Saisissez votre programme C ligne par ligne (tapez 'END' pour terminer) :");
                     java.util.List<String> programmeUtilisateur = new java.util.ArrayList<>();
                     while (true) {
@@ -96,7 +116,7 @@ public class partiexecutable {
                     }
                     programme = programmeUtilisateur.toArray(new String[0]);
                 }
-                case 5 -> {
+                case 6 -> {
                     System.out.println("Au revoir !");
                     return;
                 }
@@ -106,7 +126,7 @@ public class partiexecutable {
                 }
             }
 
-            // Choix de type d'analyse
+            // Choix du type d'analyse
             System.out.println("\n===== Type d'analyse =====");
             System.out.println("1. Analyse lexicale uniquement");
             System.out.println("2. Analyse lexicale + syntaxique");
@@ -115,18 +135,17 @@ public class partiexecutable {
             sc.nextLine();
 
             if (programme != null) {
-                // Générer les tokens pour analyse syntaxique
+                // Générer les tokens
                 List<Token> tokens = analyseur.analyserProgrammeTokens(programme);
 
                 // Analyse lexicale
-                System.out.println("=== Tokens générés ===");
+                System.out.println("\n=== Tokens générés ===");
                 for (Token t : tokens) {
                     System.out.println(t);
                 }
 
-                // Analyse syntaxique si choix 2
+                // Analyse syntaxique si choisi
                 if (choixAnalyse == 2) {
-                    // Création du parser avec la liste de tokens
                     AnalyseurSyntaxiqueC parser = new AnalyseurSyntaxiqueC(tokens);
                     parser.analyserProgramme();
                 }
@@ -134,3 +153,5 @@ public class partiexecutable {
         }
     }
 }
+
+
