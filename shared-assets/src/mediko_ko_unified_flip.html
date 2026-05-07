@@ -1,0 +1,251 @@
+
+<style>
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .logo-text {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 54px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .medi-part { color: var(--color-text-primary); }
+
+  .ko-wrapper {
+    display: inline-flex;
+    align-items: center;
+    perspective: 800px;
+    position: relative;
+  }
+
+  .ko-flipper {
+    display: inline-block;
+    transform-style: preserve-3d;
+    position: relative;
+    width: 80px;
+    height: 64px;
+  }
+
+  .ko-front, .ko-back {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .ko-front {
+    transform: rotateY(0deg);
+  }
+
+  .ko-back {
+    transform: rotateY(180deg);
+  }
+
+  .ko-text {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 54px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    background: linear-gradient(90deg, #41AD49, #0072BC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .ko-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ko-flipper {
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ko-flipper.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .icon-label {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    font-family: var(--font-sans);
+    letter-spacing: 0.06em;
+    min-height: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: opacity 0.3s ease;
+  }
+
+  .hint {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.02em;
+  }
+</style>
+
+<div class="logo-wrap">
+  <h2 class="sr-only">Mediko animated logo — Ko letters flip as one to reveal monochrome medical icons on hover</h2>
+
+  <div class="logo-text" id="logo">
+    <span class="medi-part">Medi</span>
+    <span class="ko-wrapper">
+      <span class="ko-flipper" id="ko-flipper">
+        <span class="ko-front">
+          <span class="ko-text">Ko</span>
+        </span>
+        <span class="ko-back" id="ko-back">
+          <span class="ko-icon" id="ko-icon"></span>
+        </span>
+      </span>
+    </span>
+  </div>
+
+  <div class="icon-label" id="icon-label"></div>
+  <div class="hint">hover the logo</div>
+</div>
+
+<script>
+const icons = [
+  {
+    label: "stethoscope",
+    svg: `<svg viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg" width="58" height="58">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="58" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#41AD49"/>
+          <stop offset="100%" stop-color="#0072BC"/>
+        </linearGradient>
+      </defs>
+      <path d="M14 8 C14 8 10 8 10 14 L10 26 C10 34 16 40 24 41 C24 41 24 46 29 49 C34 52 40 49 40 44 C40 39 35 37 35 37" stroke="url(#g1)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <path d="M14 8 L22 8 C22 8 26 8 26 14 L26 26 C26 34 20 40 24 41" stroke="url(#g1)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <circle cx="37.5" cy="36.5" r="3.5" fill="url(#g1)"/>
+      <circle cx="11" cy="7" r="3" fill="url(#g1)"/>
+      <circle cx="23" cy="7" r="3" fill="url(#g1)"/>
+    </svg>`
+  },
+  {
+    label: "heartbeat",
+    svg: `<svg viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg" width="58" height="58">
+      <defs>
+        <linearGradient id="g2" x1="0" y1="0" x2="58" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#41AD49"/>
+          <stop offset="100%" stop-color="#0072BC"/>
+        </linearGradient>
+      </defs>
+      <path d="M29 47 C29 47 8 33 8 20 C8 13 13 8 20 8 C24 8 27 10 29 13 C31 10 34 8 38 8 C45 8 50 13 50 20 C50 33 29 47 29 47Z" stroke="url(#g2)" stroke-width="3" fill="none" stroke-linejoin="round"/>
+      <polyline points="10,28 17,28 21,19 25,35 30,23 34,31 38,28 48,28" stroke="url(#g2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>`
+  },
+  {
+    label: "syringe",
+    svg: `<svg viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg" width="58" height="58">
+      <defs>
+        <linearGradient id="g3" x1="0" y1="0" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#41AD49"/>
+          <stop offset="100%" stop-color="#0072BC"/>
+        </linearGradient>
+      </defs>
+      <line x1="46" y1="8" x2="50" y2="12" stroke="url(#g3)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="42" y1="12" x2="46" y2="8" stroke="url(#g3)" stroke-width="3" stroke-linecap="round"/>
+      <rect x="20" y="16" width="20" height="26" rx="3" stroke="url(#g3)" stroke-width="3" fill="none"/>
+      <line x1="30" y1="8" x2="30" y2="16" stroke="url(#g3)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="30" y1="42" x2="30" y2="50" stroke="url(#g3)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="20" y1="26" x2="40" y2="26" stroke="url(#g3)" stroke-width="2" stroke-linecap="round"/>
+      <line x1="20" y1="33" x2="40" y2="33" stroke="url(#g3)" stroke-width="2" stroke-linecap="round"/>
+      <line x1="27" y1="8" x2="33" y2="8" stroke="url(#g3)" stroke-width="3" stroke-linecap="round"/>
+    </svg>`
+  },
+  {
+    label: "caduceus",
+    svg: `<svg viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg" width="58" height="58">
+      <defs>
+        <linearGradient id="g4" x1="0" y1="0" x2="0" y2="58" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#41AD49"/>
+          <stop offset="100%" stop-color="#0072BC"/>
+        </linearGradient>
+      </defs>
+      <line x1="29" y1="6" x2="29" y2="54" stroke="url(#g4)" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M29 14 C38 14 42 20 38 26 C34 32 20 32 20 38 C20 44 26 46 29 46" stroke="url(#g4)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <path d="M29 14 C20 14 18 20 22 26 C26 32 38 32 38 38 C38 44 34 46 29 46" stroke="url(#g4)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <path d="M22 8 C22 8 25 4 29 4 C33 4 36 8 36 8" stroke="url(#g4)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    </svg>`
+  },
+  {
+    label: "cross / aid",
+    svg: `<svg viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg" width="58" height="58">
+      <defs>
+        <linearGradient id="g5" x1="0" y1="0" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#41AD49"/>
+          <stop offset="100%" stop-color="#0072BC"/>
+        </linearGradient>
+      </defs>
+      <path d="M22 8 L36 8 L36 22 L50 22 L50 36 L36 36 L36 50 L22 50 L22 36 L8 36 L8 22 L22 22 Z" stroke="url(#g5)" stroke-width="3" stroke-linejoin="round" fill="none"/>
+    </svg>`
+  },
+  {
+    label: "clipboard / Rx",
+    svg: `<svg viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg" width="58" height="58">
+      <defs>
+        <linearGradient id="g6" x1="0" y1="0" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#41AD49"/>
+          <stop offset="100%" stop-color="#0072BC"/>
+        </linearGradient>
+      </defs>
+      <rect x="11" y="13" width="36" height="40" rx="4" stroke="url(#g6)" stroke-width="3" fill="none"/>
+      <path d="M21 13 L21 9 C21 7 23 6 29 6 C35 6 37 7 37 9 L37 13" stroke="url(#g6)" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M20 28 L24 28 C26 28 28 26 28 24 C28 22 26 20 24 20 L20 20 L20 34 M26 28 L31 34" stroke="url(#g6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <line x1="34" y1="20" x2="38" y2="20" stroke="url(#g6)" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>`
+  }
+];
+
+let current = 0;
+let flipped = false;
+const flipper = document.getElementById('ko-flipper');
+const koBack  = document.getElementById('ko-back');
+const koIcon  = document.getElementById('ko-icon');
+const lbl     = document.getElementById('icon-label');
+const logo    = document.getElementById('logo');
+
+function showIcon(idx) {
+  koIcon.innerHTML = icons[idx].svg;
+  lbl.textContent  = icons[idx].label;
+}
+
+showIcon(0);
+
+logo.addEventListener('mouseenter', () => {
+  if (!flipped) {
+    showIcon(current % icons.length);
+    flipper.classList.add('flipped');
+    flipped = true;
+  }
+});
+
+logo.addEventListener('mouseleave', () => {
+  if (flipped) {
+    flipper.classList.remove('flipped');
+    flipped = false;
+    current++;
+    lbl.textContent = '';
+    setTimeout(() => showIcon(current % icons.length), 300);
+  }
+});
+</script>

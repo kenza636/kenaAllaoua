@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un compte - Espace Médecin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <!-- Bouton Retour -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+
+            <!-- Logo et Titre -->
+            <div class="header">
+                <div class="logo-container">
+                    <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Cœur gauche (vert) -->
+                        <g id="heart-left">
+                            <path d="M 100 160 C 60 130 30 100 30 75 C 30 55 45 40 60 40 C 75 40 90 55 100 70" 
+                                  fill="none" stroke="#7FD856" stroke-width="8" stroke-linecap="round"/>
+                        </g>
+                        <!-- Cœur droit (bleu) -->
+                        <g id="heart-right">
+                            <path d="M 100 160 C 140 130 170 100 170 75 C 170 55 155 40 140 40 C 125 40 110 55 100 70" 
+                                  fill="none" stroke="#3B9FD8" stroke-width="8" stroke-linecap="round"/>
+                        </g>
+                        <!-- Ligne ECG (vert à bleu) -->
+                        <polyline points="50,100 60,100 65,85 70,110 75,95 85,100 150,100" 
+                                  fill="none" stroke="url(#gradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Croix médicale (bleu) -->
+                        <g id="medical-cross">
+                            <rect x="95" y="75" width="10" height="30" fill="#3B9FD8"/>
+                            <rect x="80" y="90" width="40" height="10" fill="#3B9FD8"/>
+                        </g>
+                        <!-- Gradient -->
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#7FD856;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#3B9FD8;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1>Créer un compte pro</h1>
+                <p class="subtitle">Inscrivez-vous pour accéder à vos consultations</p>
+            </div>
+
+            <!-- Formulaire d'inscription -->
+            <form class="login-form" id="signupForm">
+                <!-- Champ Nom -->
+                <div class="form-group">
+                    <label for="name">Nom complet <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            placeholder="Votre nom complet"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Champ Email -->
+                <div class="form-group">
+                    <label for="signup-email">Adresse email professionnelle <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input 
+                            type="email" 
+                            id="signup-email" 
+                            name="email" 
+                            placeholder="votre.email@domaine.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Champ Mot de passe -->
+                <div class="form-group">
+                    <label for="signup-password">Mot de passe <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input 
+                            type="password" 
+                            id="signup-password" 
+                            name="password" 
+                            placeholder="Au moins 8 caractères"
+                            required
+                        >
+                    </div>
+                    <small style="color: #999; font-size: 12px;">Au moins 8 caractères, 1 majuscule, 1 chiffre</small>
+                </div>
+
+                <!-- Champ Confirmer Mot de passe -->
+                <div class="form-group">
+                    <label for="confirm-password">Confirmer le mot de passe <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input 
+                            type="password" 
+                            id="confirm-password" 
+                            name="confirm_password" 
+                            placeholder="Confirmez votre mot de passe"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Checkbox Conditions -->
+                <div class="form-group" style="flex-direction: row; gap: 8px;">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms" style="margin: 0;">J'accepte les <a href="#" style="color: #3B9FD8; text-decoration: none;">conditions d'utilisation</a></label>
+                </div>
+
+                <!-- Bouton Inscription -->
+                <button type="submit" class="btn-login">
+                    Créer mon compte <i class="fas fa-check"></i>
+                </button>
+            </form>
+
+            <!-- Lien Connexion -->
+            <div class="footer-text">
+                Vous avez déjà un compte ? 
+                <a href="../index.html" class="link-signup">Se connecter</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const terms = document.getElementById('terms').checked;
+
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('Le mot de passe doit contenir au moins 8 caractères');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Les mots de passe ne correspondent pas');
+                return;
+            }
+
+            if (!terms) {
+                alert('Veuillez accepter les conditions d\'utilisation');
+                return;
+            }
+
+            alert('Compte créé avec succès! Redirection vers la connexion...');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

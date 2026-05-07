@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="200" viewBox="0 0 220 200">
+  <defs>
+    <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#92ce31"/>
+      <stop offset="40%"  stop-color="#5ab87e"/>
+      <stop offset="70%" stop-color="#1477d4"/>
+    </linearGradient>
+    <mask id="cut">
+      <path d="M110 178 C65 150, 16 122, 16 76 C16 50, 35 28, 60 28 C76 28, 90 37, 110 54 C130 37, 144 28, 160 28 C185 28, 204 50, 204 76 C204 122, 155 150, 110 178 Z" fill="white"/>
+      <rect x="101" y="70" width="19" height="62" rx="4" fill="black"/>
+      <rect x="79"  y="91" width="63" height="19" rx="4" fill="black"/>
+    </mask>
+  </defs>
+  <path d="M110 178 C65 150, 16 122, 16 76 C16 50, 35 28, 60 28 C76 28, 90 37, 110 54 C130 37, 144 28, 160 28 C185 28, 204 50, 204 76 C204 122, 155 150, 110 178 Z"
+    fill="url(#hg)" mask="url(#cut)"/>
+</svg>

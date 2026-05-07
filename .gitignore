@@ -1,0 +1,41 @@
+# ── Dependencies ─────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ── Build output ──────────────────────────────────────────────────
+dist/
+build/
+.vite/
+
+# ── Environment / secrets ─────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ── Uploads (large binary files — keep folder, ignore contents) ───
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# ── Logs ─────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+grok_logs.csv
+
+# ── OS / Editor ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ── Misc scripts (dev-only) ───────────────────────────────────────
+copier-composants.ps1
+migrer-medecin-vite.ps1
+reorganiser-projet.ps1

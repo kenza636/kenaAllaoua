@@ -1,0 +1,244 @@
+.doctor-details {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.details-header {
+  background: #f9fafb;
+  padding: 20px 24px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.details-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.details-specialty {
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.details-content {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #334155;
+  font-size: 14px;
+}
+
+.info-value {
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 12px 0;
+  color: #0f172a;
+}
+
+.diploma-list {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.diploma-item {
+  padding: 10px 12px;
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  border: 1px solid #e2e8f0;
+}
+
+.consultations-badge {
+  background: #e6f0ff;
+  color: #2563eb;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.upload-section {
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 20px;
+  border: 1px dashed #cbd5e1;
+}
+
+.upload-label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
+  color: #1e293b;
+}
+
+.file-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 13px;
+  background: white;
+  margin-bottom: 12px;
+}
+
+.message-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  background: white;
+  margin-bottom: 12px;
+  font-family: Arial, sans-serif;
+  resize: vertical;
+  min-height: 150px;
+}
+
+.message-textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn-submit {
+  background: #2563eb;
+  color: white;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-submit:hover {
+  background: #1d4ed8;
+}
+
+.uploaded-docs {
+  margin-top: 12px;
+}
+
+.doc-item {
+  background: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.doc-status {
+  color: #10b981;
+  font-size: 11px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.btn-approve, .btn-reject {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-approve {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-approve:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.btn-reject {
+  background: white;
+  border: 1px solid #e2e8f0;
+  color: #dc2626;
+}
+
+.btn-reject:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.btn-approve:disabled, .btn-reject:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.status-message {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-message.approved {
+  color: #15803d;
+}
+
+.status-message.rejected {
+  color: #dc2626;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+  background: white;
+  border-radius: 20px;
+}
+
+hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #edf2f7;
+}

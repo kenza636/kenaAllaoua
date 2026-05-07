@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index du Projet - Espace Médecin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-icon {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-link {
+            display: inline-block;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-link {
+            color: #764ba2;
+            transform: translateX(5px);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            color: white;
+            font-size: 28px;
+            margin: 40px 0 30px 0;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .files-list {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .files-list h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f5f5f5;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .file-item:hover {
+            background: #f0f4ff;
+            transform: translateX(5px);
+        }
+
+        .file-icon {
+            font-size: 20px;
+            color: #667eea;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-info strong {
+            color: #333;
+            display: block;
+        }
+
+        .file-info small {
+            color: #999;
+            font-size: 12px;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        .breadcrumb {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <i class="fas fa-folder-open"></i> espace-medecin / Accueil
+        </div>
+
+        <header>
+            <h1><i class="fas fa-heart"></i> Espace Médecin</h1>
+            <p>Centre de ressources du projet - Bienvenue!</p>
+        </header>
+
+        <!-- Cartes Principales -->
+        <div class="content">
+            <a href="index.html" class="card">
+                <div class="card-icon"><i class="fas fa-sign-in-alt"></i></div>
+                <h2>Se Connecter</h2>
+                <p>Accédez à la page de connexion principale de l'application.</p>
+                <span class="card-link">Ouvrir l'application →</span>
+            </a>
+
+            <a href="pages/signup.html" class="card">
+                <div class="card-icon"><i class="fas fa-user-plus"></i></div>
+                <h2>Créer un Compte</h2>
+                <p>Formulaire d'inscription pour les nouveaux utilisateurs.</p>
+                <span class="card-link">Créer un compte →</span>
+            </a>
+
+            <a href="pages/forgot-password.html" class="card">
+                <div class="card-icon"><i class="fas fa-key"></i></div>
+                <h2>Récupérer Mot de Passe</h2>
+                <p>Réinitialiser votre mot de passe oublié.</p>
+                <span class="card-link">Récupérer →</span>
+            </a>
+        </div>
+
+        <div class="content">
+            <a href="pages/dashboard.html" class="card">
+                <div class="card-icon"><i class="fas fa-th-large"></i></div>
+                <h2>Tableau de Bord</h2>
+                <p>Visualisez le tableau de bord utilisateur après connexion.</p>
+                <span class="card-link">Voir le dashboard →</span>
+            </a>
+
+            <a href="pages/structure.html" class="card">
+                <div class="card-icon"><i class="fas fa-sitemap"></i></div>
+                <h2>Structure du Projet</h2>
+                <p>Comprendre l'organisation et les fichiers du projet.</p>
+                <span class="card-link">Voir la structure →</span>
+            </a>
+
+            <a href="README.md" class="card" target="_blank">
+                <div class="card-icon"><i class="fas fa-book"></i></div>
+                <h2>Documentation</h2>
+                <p>Lire la documentation complète du projet.</p>
+                <span class="card-link">Lire →</span>
+            </a>
+        </div>
+
+        <!-- Section Fichiers -->
+        <h2 class="section-title">📂 Fichiers du Projet</h2>
+
+        <div class="files-list">
+            <h3><i class="fas fa-file-code"></i> Pages HTML</h3>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-home"></i></div>
+                <div class="file-info">
+                    <strong>index.html</strong>
+                    <small>Page de connexion principale</small>
+                </div>
+            </div>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-user-plus"></i></div>
+                <div class="file-info">
+                    <strong>pages/signup.html</strong>
+                    <small>Formulaire d'inscription</small>
+                </div>
+            </div>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-key"></i></div>
+                <div class="file-info">
+                    <strong>pages/forgot-password.html</strong>
+                    <small>Récupération de mot de passe</small>
+                </div>
+            </div>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-chart-bar"></i></div>
+                <div class="file-info">
+                    <strong>pages/dashboard.html</strong>
+                    <small>Tableau de bord utilisateur</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="files-list">
+            <h3><i class="fas fa-palette"></i> Ressources CSS & JS</h3>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-paint-brush"></i></div>
+                <div class="file-info">
+                    <strong>css/styles.css</strong>
+                    <small>Tous les styles et animations</small>
+                </div>
+            </div>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-code"></i></div>
+                <div class="file-info">
+                    <strong>js/script.js</strong>
+                    <small>Logique JavaScript et validation</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="files-list">
+            <h3><i class="fas fa-file-alt"></i> Documentation</h3>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-book"></i></div>
+                <div class="file-info">
+                    <strong>README.md</strong>
+                    <small>Documentation complète du projet</small>
+                </div>
+            </div>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-rocket"></i></div>
+                <div class="file-info">
+                    <strong>GETTING_STARTED.md</strong>
+                    <small>Guide de démarrage rapide</small>
+                </div>
+            </div>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-cog"></i></div>
+                <div class="file-info">
+                    <strong>CONFIG.md</strong>
+                    <small>Configuration technique</small>
+                </div>
+            </div>
+            <div class="file-item">
+                <div class="file-icon"><i class="fas fa-plus-circle"></i></div>
+                <div class="file-info">
+                    <strong>FICHIERS_À_AJOUTER.md</strong>
+                    <small>Suggestions de fichiers supplémentaires</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons d'Action -->
+        <div class="button-group">
+            <a href="index.html" class="btn btn-primary">
+                <i class="fas fa-play"></i> Lancer l'Application
+            </a>
+            <a href="README.md" target="_blank" class="btn btn-secondary">
+                <i class="fas fa-book-open"></i> Lire la Doc
+            </a>
+        </div>
+
+        <footer>
+            <p>✨ Espace Médecin - Plateforme de Gestion des Consultations Médicales</p>
+            <p style="font-size: 12px; margin-top: 10px;">Créé le 6 mai 2026 | Version 1.0.0</p>
+        </footer>
+    </div>
+</body>
+</html>

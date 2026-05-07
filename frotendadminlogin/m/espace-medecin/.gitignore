@@ -1,0 +1,13 @@
+.env.example
+node_modules/
+dist/
+build/
+*.log
+.DS_Store
+.env
+.idea/
+*.swp
+*~
+.vscode/
+*.css.map
+*.js.map

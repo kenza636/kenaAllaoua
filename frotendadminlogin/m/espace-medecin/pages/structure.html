@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structure du Projet - Espace Médecin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        .structure {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            line-height: 1.8;
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 14px;
+            border-left: 4px solid #667eea;
+        }
+
+        .file-description {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .file-description h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .file-description p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin: 30px 0;
+        }
+
+        .section h2 {
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .code {
+            background: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+
+        .button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Espace Médecin - Structure du Projet</h1>
+
+        <div class="structure">
+            <!-- Section 1: Vue d'ensemble -->
+            <div class="section">
+                <h2>📊 Vue d'Ensemble de la Structure</h2>
+                <pre>
+espace-medecin/
+├── index.html                    # Page de connexion principale
+├── README.md                     # Documentation complète
+├── GETTING_STARTED.md            # Guide de démarrage
+├── CONFIG.md                     # Configuration technique
+├── FICHIERS_À_AJOUTER.md        # Fichiers recommandés
+├── package.json                  # Configuration NPM
+├── .gitignore                    # Fichiers ignorés par Git
+│
+├── 📁 css/
+│   └── styles.css               # Feuille de styles principale
+│
+├── 📁 js/
+│   └── script.js                # Logique JavaScript
+│
+├── 📁 pages/
+│   ├── signup.html              # Formulaire d'inscription
+│   ├── forgot-password.html     # Récupération de mot de passe
+│   └── dashboard.html           # Tableau de bord utilisateur
+│
+└── 📁 assets/
+    ├── images/                  # Dossier pour les images
+    └── icons/                   # Dossier pour les icônes
+                </pre>
+            </div>
+
+            <!-- Section 2: Description des fichiers -->
+            <div class="section">
+                <h2>📄 Description des Fichiers</h2>
+
+                <div class="file-description">
+                    <h3>📌 index.html</h3>
+                    <p>
+                        <strong>Rôle:</strong> Page principale de l'application<br>
+                        <strong>Contient:</strong> Formulaire de connexion, logo, bouton retour<br>
+                        <strong>À ouvrir:</strong> Directement dans le navigateur<br>
+                        <strong>Liens vers:</strong> signup.html, forgot-password.html, dashboard.html
+                    </p>
+                </div>
+
+                <div class="file-description">
+                    <h3>📌 css/styles.css</h3>
+                    <p>
+                        <strong>Rôle:</strong> Tous les styles de l'application<br>
+                        <strong>Contient:</strong> Variables CSS, designs, animations, responsive<br>
+                        <strong>Utilisé par:</strong> Toutes les pages HTML<br>
+                        <strong>Points clés:</strong> Couleurs, dégradés, transitions
+                    </p>
+                </div>
+
+                <div class="file-description">
+                    <h3>📌 js/script.js</h3>
+                    <p>
+                        <strong>Rôle:</strong> Logique JavaScript du site<br>
+                        <strong>Gère:</strong> Validation, toggling, événements, messages<br>
+                        <strong>Utilisé par:</strong> Toutes les pages HTML<br>
+                        <strong>Fonctions clés:</strong> togglePassword(), showMessage(), validation
+                    </p>
+                </div>
+
+                <div class="file-description">
+                    <h3>📌 pages/signup.html</h3>
+                    <p>
+                        <strong>Rôle:</strong> Formulaire d'inscription<br>
+                        <strong>Champs:</strong> Nom, Email, Mot de passe, Confirmation<br>
+                        <strong>Accès:</strong> Lien "Créer un compte pro" depuis index.html<br>
+                        <strong>Utilise:</strong> css/styles.css pour le design
+                    </p>
+                </div>
+
+                <div class="file-description">
+                    <h3>📌 pages/forgot-password.html</h3>
+                    <p>
+                        <strong>Rôle:</strong> Récupération du mot de passe<br>
+                        <strong>Demande:</strong> Email de l'utilisateur<br>
+                        <strong>Accès:</strong> Lien "Mot de passe oublié ?" depuis index.html<br>
+                        <strong>Action:</strong> Envoie un lien de réinitialisation (simulation)
+                    </p>
+                </div>
+
+                <div class="file-description">
+                    <h3>📌 pages/dashboard.html</h3>
+                    <p>
+                        <strong>Rôle:</strong> Tableau de bord après connexion<br>
+                        <strong>Affiche:</strong> Sidebar, menu, statistiques, cartes d'info<br>
+                        <strong>Accès:</strong> Programmé après une connexion réussie<br>
+                        <strong>Contient:</strong> Navigation principale, profil utilisateur
+                    </p>
+                </div>
+            </div>
+
+            <!-- Section 3: Fichiers de Documentation -->
+            <div class="section">
+                <h2>📚 Fichiers de Documentation</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fichier</th>
+                            <th>Contenu</th>
+                            <th>Pour Qui</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>README.md</strong></td>
+                            <td>Documentation complète du projet</td>
+                            <td>Tous les utilisateurs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GETTING_STARTED.md</strong></td>
+                            <td>Guide de démarrage rapide</td>
+                            <td>Premiers utilisateurs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CONFIG.md</strong></td>
+                            <td>Configuration technique et API</td>
+                            <td>Développeurs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FICHIERS_À_AJOUTER.md</strong></td>
+                            <td>Fichiers recommandés pour l'amélioration</td>
+                            <td>Développeurs avancés</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 4: Dossiers Assets -->
+            <div class="section">
+                <h2>🎨 Dossiers Assets</h2>
+
+                <div class="file-description">
+                    <h3>assets/images/</h3>
+                    <p>
+                        <strong>Utilité:</strong> Stocker les images du site (PNG, JPG, WEBP, SVG)<br>
+                        <strong>Exemples:</strong> Logo personnalisé, photos de profil, bannières<br>
+                        <strong>Optimisation:</strong> Compresser les images avant d'ajouter<br>
+                        <div class="code">Utilisation: &lt;img src="assets/images/ma-photo.jpg" alt="Description"&gt;</div>
+                    </p>
+                </div>
+
+                <div class="file-description">
+                    <h3>assets/icons/</h3>
+                    <p>
+                        <strong>Utilité:</strong> Stocker les icônes personnalisées<br>
+                        <strong>Format recommandé:</strong> SVG ou PNG transparent<br>
+                        <strong>Actuellement:</strong> Utilise Font Awesome en ligne<br>
+                        <div class="code">Vous pouvez ajouter des icônes custom SVG ici</div>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Section 5: Flux de Navigation -->
+            <div class="section">
+                <h2>🔄 Flux de Navigation</h2>
+
+                <pre>
+INDEX.HTML (Connexion)
+    ├─→ Cliquer "Créer compte pro" → signup.html
+    ├─→ Cliquer "Mot de passe ?" → forgot-password.html
+    └─→ Cliquer "Se connecter" → dashboard.html
+
+SIGNUP.HTML (Inscription)
+    └─→ Compte créé → retour à index.html
+
+FORGOT-PASSWORD.HTML (Récupération)
+    └─→ Email envoyé → retour à index.html
+
+DASHBOARD.HTML (Tableau de bord)
+    └─→ Cliquer "Déconnexion" → index.html
+                </pre>
+            </div>
+
+            <!-- Section 6: Commandes Utiles -->
+            <div class="section">
+                <h2>⚙️ Commandes Utiles</h2>
+
+                <div class="code">
+                    # Démarrer un serveur local Python<br>
+                    python -m http.server 8000<br>
+                    <br>
+                    # Ou avec Node.js<br>
+                    npx http-server -p 8000<br>
+                    <br>
+                    # Initialiser Git<br>
+                    git init<br>
+                    git add .<br>
+                    git commit -m "Initial commit"<br>
+                </div>
+            </div>
+
+            <!-- Section 7: Prochaines Étapes -->
+            <div class="section">
+                <h2>🚀 Prochaines Étapes</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Actions</th>
+                            <th>Durée Est.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Phase 1</strong></td>
+                            <td>Tester l'interface, modifier les couleurs/textes</td>
+                            <td>1-2 jours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 2</strong></td>
+                            <td>Créer le backend API</td>
+                            <td>3-5 jours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 3</strong></td>
+                            <td>Intégrer base de données</td>
+                            <td>2-3 jours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 4</strong></td>
+                            <td>Tester et déployer</td>
+                            <td>1-2 jours</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="../index.html" class="button">← Retour à l'Application</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

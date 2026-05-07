@@ -1,0 +1,24 @@
+{
+  "name": "espace-medecin",
+  "version": "1.0.0",
+  "description": "Application de gestion des consultations médicales - Espace Médecin",
+  "main": "index.html",
+  "author": "Développeur",
+  "license": "MIT",
+  "keywords": [
+    "médecin",
+    "consultations",
+    "santé",
+    "healthcare",
+    "portal"
+  ],
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "http-server -p 8000 -o"
+  },
+  "directories": {
+    "doc": "pages",
+    "lib": "js",
+    "assets": "assets"
+  }
+}

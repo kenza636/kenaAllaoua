@@ -1,0 +1,861 @@
+/* =========================================
+   RESET & VARIABLES GLOBALES
+   ========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-blue: #2563eb;
+  --primary-black: #020617;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --bg-light: #f8fafc;
+  --bg-page: #f1f5f9; /* NOUVEAU : fond de page plus contraste */
+  --bg-dark: #0f172a;
+  --border-color: #e2e8f0;
+  --white: #ffffff;
+  --danger: #f87171;
+
+  /* Ombre "fade" réutilisable partout */
+  --shadow-card: 0 24px 48px -20px rgba(15, 23, 42, 0.25);
+  --shadow-card-hover: 0 30px 60px -20px rgba(15, 23, 42, 0.35);
+}
+
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================
+   LAYOUT GLOBAL
+   ========================================= */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  position: fixed;
+  inset: 0 auto 0 0;
+  background: var(--white);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px;
+  z-index: 10;
+}
+
+/* MODIFIE : fond plus contraste + plus de padding pour que l'ombre respire */
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 32px 40px;
+  background: var(--bg-page);
+  min-height: 100vh;
+}
+
+/* MODIFIE : ombre qui fade vraiment + plus de border-radius */
+.main-content-bg {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+/* =========================================
+   SIDEBAR
+   ========================================= */
+.sidebar-logo-title,
+.logo-text {
+  color: var(--primary-blue);
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.sidebar-subtitle,
+.subtitle {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.sidebar-nav,
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: var(--bg-light);
+  color: var(--text-main);
+  font-weight: 500;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-item:hover:not(.active) {
+  background-color: #e2e8f0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.nav-item.active {
+  background-color: var(--text-main);
+  color: var(--white);
+  border-color: var(--text-main);
+}
+
+.doctor-card,
+.user-info-card {
+  background-color: var(--bg-light);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.doctor-avatar,
+.avatar-blue {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  background-color: var(--primary-blue);
+  color: var(--white);
+}
+
+.doctor-name,
+.user-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.doctor-specialty,
+.user-role {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.logout-button,
+.logout-btn-full {
+  width: 100%;
+  padding: 14px;
+  border-radius: 16px;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.logout-button:hover,
+.logout-btn-full:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+}
+
+/* =========================================
+   TYPOGRAPHIE ET BOUTONS
+   ========================================= */
+.header-flex-figma {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.figma-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.figma-subtitle {
+  margin-top: 6px;
+  color: var(--text-muted);
+}
+
+.btn-figma-black,
+.btn-figma-black-sm,
+.btn-figma-outline-sm,
+.btn-filter-figma {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-figma-black,
+.btn-figma-black-sm {
+  background: var(--text-main);
+  color: var(--white);
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.2);
+}
+
+.btn-figma-black {
+  padding: 12px 24px;
+}
+
+.btn-figma-black-sm {
+  padding: 10px 20px;
+}
+
+.btn-figma-outline-sm,
+.btn-filter-figma {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 12px 20px;
+}
+
+.btn-figma-black:hover,
+.btn-figma-black-sm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.3);
+}
+
+.btn-figma-outline-sm:hover,
+.btn-filter-figma:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   CHAMPS ET TABS
+   ========================================= */
+.search-row-figma,
+.tabs-figma,
+.actions-grid {
+  display: flex;
+  gap: 16px;
+}
+
+.search-container-figma {
+  position: relative;
+  flex: 1;
+}
+
+.search-bar-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon-figma {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.input-figma,
+.date-picker-input-figma,
+.search-bar-wrapper input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px 0 48px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  background: var(--white);
+  font-size: 15px;
+  color: var(--text-main);
+  outline: none;
+}
+
+.input-figma::placeholder,
+.search-bar-wrapper input::placeholder {
+  color: var(--text-light);
+}
+
+.tab-item-figma,
+.tabs-bar button {
+  flex: 1;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-item-figma.active,
+.tabs-bar button.active {
+  background: #e2e8f0;
+  color: var(--text-main);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   CARTES ET LISTES
+   ========================================= */
+/* MODIFIE : ombre qui fade + hover avec soulevement */
+.card-figma,
+.patient-card-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--white);
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-figma:hover,
+.patient-card-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.patient-card-item.active {
+  background: var(--text-main);
+  box-shadow: 0 24px 48px -20px rgba(37, 99, 235, 0.4);
+}
+
+.patient-card-item.active .patient-name-figma,
+.patient-card-item.active .patient-age-figma {
+  color: var(--white);
+}
+
+.avatar-figma,
+.avatar-letter {
+  width: 56px;
+  height: 56px;
+  background: #eff6ff;
+  color: #0052ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.card-content-figma {
+  flex: 1;
+}
+
+.patient-name-figma,
+.meta h4 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.patient-age-figma,
+.meta span {
+  font-size: 16px;
+  color: var(--text-light);
+}
+
+.status-pill-figma {
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status-pill-figma.confirme {
+  background: var(--text-main);
+  color: var(--white);
+}
+
+.status-pill-figma.en-attente {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.card-details-figma {
+  display: flex;
+  gap: 24px;
+  color: #64748b;
+  margin: 12px 0;
+  font-size: 15px;
+}
+
+.link-figma-blue {
+  color: var(--primary-blue);
+  font-weight: 700;
+}
+
+.reason-figma {
+  color: var(--text-main);
+}
+
+/* =========================================
+   DETAILS PANEL
+   ========================================= */
+/* MODIFIE : même style d'ombre que les cartes */
+.details-panel {
+  flex: 1;
+  background: var(--white);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: var(--shadow-card);
+  overflow-y: auto;
+}
+
+.avatar-big {
+  width: 60px;
+  height: 60px;
+  background: #dce7ff;
+  color: #0052ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.folder-header,
+.header-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--text-main);
+  color: var(--white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.2);
+}
+
+.edit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.3);
+}
+
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.info-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.blood-tag {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.medical-tags-section {
+  margin-top: 24px;
+}
+
+.badges-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.badge-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.badge-black,
+.badge-red {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.badge-black {
+  background: var(--text-main);
+}
+
+.badge-red {
+  background: var(--danger);
+}
+
+/* =========================================
+   HISTORY ET DOCUMENTS
+   ========================================= */
+.history-docs-section,
+.docs-tab-content,
+.history-list,
+.docs-list,
+.prescriptions-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.history-item {
+  border-left: 3px solid var(--primary-blue);
+  padding-left: 12px;
+  margin-bottom: 16px;
+}
+
+.history-item h4,
+.history-item strong {
+  color: var(--text-main);
+  margin: 0;
+}
+
+.history-item p {
+  color: var(--text-muted);
+}
+
+.prescription-card {
+  background: #f8fafc;
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prescr-info h4,
+.prescr-info span {
+  margin: 0;
+}
+
+.prescr-info h4 {
+  color: var(--text-main);
+}
+
+.prescr-info span {
+  color: var(--text-muted);
+}
+
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.doc-icon-box {
+  width: 42px;
+  height: 42px;
+  background: #ddeeff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-view,
+.empty-state-figma {
+  padding: 28px;
+  border-radius: 20px;
+  background: #f8fafc;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* =========================================
+   PATIENTS & DETAILS
+   ========================================= */
+.patients-page-container {
+  width: 100%;
+}
+
+.patients-main-layout {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.sidebar-list {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.patients-scroll-area {
+  margin-top: 16px;
+  overflow-y: auto;
+  max-height: 75vh;
+  padding: 8px; /* pour que les ombres des cartes ne soient pas coupees */
+}
+
+.count-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+
+.patient-folder {
+  margin-bottom: 24px;
+}
+
+.tab-panel {
+  margin-top: 20px;
+}
+
+/* =========================================
+   QUICK ACTIONS
+   ========================================= */
+.quick-actions-container {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.action-card-item {
+  background: var(--bg-light);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-card-item:hover {
+  transform: translateY(-2px);
+  background: #e2e8f0;
+  box-shadow: 0 12px 24px -10px rgba(15, 23, 42, 0.15);
+}
+
+.action-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.arrow-right {
+  font-size: 22px;
+  color: var(--primary-blue);
+}
+
+.stats-grid-figma {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.appointments-section {
+  margin-top: 32px;
+}
+
+.appointment-list {
+  display: grid;
+  gap: 20px;
+}
+
+.card-header-figma {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.card-actions-figma {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 200;
+}
+
+.modal-content {
+  width: min(680px, 100%);
+  background: var(--white);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 40px 80px -20px rgba(15, 23, 42, 0.3);
+}
+
+/* =========================================
+   CARTE UTILISATEUR CLIQUABLE (lien vers profil)
+   ========================================= */
+.user-card-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: var(--bg-light);
+  border-radius: 16px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-card-link:hover {
+  background-color: #e2e8f0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.user-card-link.active {
+  background-color: var(--text-main);
+  border-color: var(--text-main);
+}
+
+.user-card-link.active .user-name {
+  color: var(--white);
+}
+
+.user-card-link.active .user-role {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.user-card-link.active .avatar-blue {
+  background-color: var(--white);
+  color: var(--text-main);
+}
+/* =========================================
+   CARTES PATIENTS - STYLE COHERENT AVEC SIDEBAR
+   A AJOUTER A LA FIN DE App.css
+   ========================================= */
+
+.patient-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: #f8fafc;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 10px;
+}
+
+.patient-list-item:hover:not(.active) {
+  background-color: #e2e8f0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.patient-list-item.active {
+  background-color: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+  box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.4);
+}
+
+.patient-list-item.active .patient-list-avatar {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+/* Avatar de la liste */
+.patient-list-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 18px;
+  background-color: #dbeafe;
+  color: #2563eb;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
